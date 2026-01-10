@@ -1,0 +1,54 @@
+# Default configuration for Bond Yield Curve Analysis System
+
+# Data configuration
+data:
+  source: "synthetic"  # "fred", "synthetic", "csv"
+  symbols:
+    - "DGS1MO"
+    - "DGS3MO" 
+    - "DGS6MO"
+    - "DGS1"
+    - "DGS2"
+    - "DGS3"
+    - "DGS5"
+    - "DGS7"
+    - "DGS10"
+    - "DGS20"
+    - "DGS30"
+  start_date: "2000-01-01"
+  end_date: "2024-01-01"
+  frequency: "daily"
+  api_key: null  # Set your FRED API key here
+
+# Model configuration
+model:
+  type: "var"  # "arima", "var", "regime_switching"
+  horizon: 30
+  confidence_levels: [0.95, 0.99]
+  validation_split: 0.2
+  test_split: 0.1
+
+# Risk configuration
+risk:
+  var_horizon: 1
+  var_confidence_levels: [0.95, 0.99]
+  stress_scenarios:
+    - "recession"
+    - "inflation_shock"
+    - "flight_to_quality"
+  inversion_threshold: -0.5  # basis points
+  max_drawdown_threshold: 0.15
+
+# Backtesting configuration
+backtest:
+  initial_capital: 100000.0
+  transaction_cost_bps: 5.0  # basis points
+  slippage_bps: 2.0
+  rebalance_frequency: "monthly"
+  benchmark_symbol: "DGS10"
+
+# System configuration
+random_seed: 42
+device: "auto"  # "auto", "cpu", "cuda", "mps"
+log_level: "INFO"
+output_dir: "assets"
